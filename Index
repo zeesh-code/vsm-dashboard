@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gaviscon VSM — Opportunity &amp; Next Steps</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --surface: #f8f9fb;
+    --surface2: #f0f2f6;
+    --border: #e2e6ef;
+    --text: #1a1e2e;
+    --muted: #6b7280;
+    --now: #22c55e;
+    --now-bg: rgba(34,197,94,0.12);
+    --short: #38bdf8;
+    --short-bg: rgba(56,189,248,0.12);
+    --medium: #f59e0b;
+    --medium-bg: rgba(245,158,11,0.12);
+    --strategic: #e879f9;
+    --strategic-bg: rgba(232,121,249,0.12);
+    --low: #16a34a;
+    --low-bg: rgba(22,163,74,0.08);
+    --mid-effort: #b45309;
+    --mid-effort-bg: rgba(180,83,9,0.08);
+    --high: #dc2626;
+    --high-bg: rgba(220,38,38,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    min-height: 100vh;
+    padding: 32px 24px 60px;
+  }
+
+  /* Header */
+  .header { margin-bottom: 32px; }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 6px; }
+  .title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a1e2e;
+    letter-spacing: -0.5px;
+  }
+  .subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    margin-top: 4px;
+  }
+  .reckitt-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+.reckitt-divider {
+    width: 1px;
+    height: 22px;
+    background: var(--border);
+  }
+  .reckitt-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+
+  /* Stat cards */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 28px; }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: border-color 0.2s;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .stat-card.now::before { background: var(--now); }
+  .stat-card.short::before { background: var(--short); }
+  .stat-card.medium::before { background: var(--medium); }
+  .stat-card.strategic::before { background: var(--strategic); }
+  .stat-card:hover { border-color: #3a4055; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-card.now .stat-num { color: var(--now); }
+  .stat-card.short .stat-num { color: var(--short); }
+  .stat-card.medium .stat-num { color: var(--medium); }
+  .stat-card.strategic .stat-num { color: var(--strategic); }
+  .stat-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .stat-desc { font-size: 11px; color: #6b7280; line-height: 1.4; }
+
+  /* Filters */
+  .filter-group { margin-bottom: 8px; }
+  .filter-group:last-of-type { margin-bottom: 20px; }
+  .filters { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .filter-label { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; margin-right: 4px; white-space: nowrap; width: 110px; flex-shrink: 0; }
+  .filter-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .filter-btn:hover { border-color: #3a4055; color: var(--text); }
+  .filter-btn.active { color: #fff; border-color: transparent; }
+  .filter-btn.active.all { background: #252a38; color: #fff; }
+  .filter-btn.active.now { background: var(--now-bg); border-color: var(--now); color: var(--now); }
+  .filter-btn.active.short { background: var(--short-bg); border-color: var(--short); color: var(--short); }
+  .filter-btn.active.medium { background: var(--medium-bg); border-color: var(--medium); color: var(--medium); }
+  .filter-btn.active.strategic { background: var(--strategic-bg); border-color: var(--strategic); color: var(--strategic); }
+
+  /* Area filter button colours */
+  .filter-btn.active.area-inbound  { background: rgba(20,184,166,0.12); border-color: #14b8a6; color: #14b8a6; }
+  .filter-btn.active.area-dispensary { background: rgba(251,146,60,0.12); border-color: #fb923c; color: #fb923c; }
+  .filter-btn.active.area-processing { background: rgba(99,102,241,0.14); border-color: #818cf8; color: #818cf8; }
+  .filter-btn.active.area-fillpack  { background: rgba(232,121,249,0.12); border-color: #e879f9; color: #e879f9; }
+  .filter-btn.active.area-qcrelease { background: rgba(248,113,113,0.12); border-color: #f87171; color: #f87171; }
+  .filter-btn.active.area-dispatch  { background: rgba(148,163,184,0.12); border-color: #94a3b8; color: #94a3b8; }
+
+  /* Area dot on stream tag */
+  .area-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+    position: relative; top: -1px;
+  }
+
+  /* Search */
+  .search-wrap { flex: 1; max-width: 260px; margin-left: auto; position: relative; }
+  .search-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 10px 5px 32px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-input:focus { border-color: #3a4055; }
+  .search-input::placeholder { color: var(--muted); }
+  .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 12px; }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--surface2); }
+  th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  th:first-child { padding-left: 18px; width: 36px; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+    animation: fadeRow 0.3s ease forwards;
+    opacity: 0;
+  }
+  @keyframes fadeRow {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--surface2); }
+  td {
+    padding: 11px 14px;
+    vertical-align: top;
+    color: var(--text);
+    line-height: 1.45;
+  }
+  td:first-child { padding-left: 18px; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 11px; }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .badge.now { background: var(--now-bg); color: var(--now); border: 1px solid rgba(34,197,94,0.25); }
+  .badge.short { background: var(--short-bg); color: var(--short); border: 1px solid rgba(56,189,248,0.25); }
+  .badge.medium { background: var(--medium-bg); color: var(--medium); border: 1px solid rgba(245,158,11,0.25); }
+  .badge.strategic { background: var(--strategic-bg); color: var(--strategic); border: 1px solid rgba(232,121,249,0.25); }
+
+  .effort {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .effort.Low { background: var(--low-bg); color: var(--low); }
+  .effort.Medium { background: var(--mid-effort-bg); color: var(--mid-effort); }
+  .effort.High { background: var(--high-bg); color: var(--high); }
+
+  .stream-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    background: rgba(255,255,255,0.04);
+    padding: 2px 7px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .opp-name { font-weight: 500; color: #1a1e2e; font-size: 12.5px; margin-bottom: 2px; }
+  .benefit-text { font-size: 11.5px; color: #374151; }
+  .what-text { font-size: 11.5px; color: #4b5563; }
+
+  .empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    display: none;
+  }
+
+  /* Row animation delays */
+  tbody tr:nth-child(1) { animation-delay: 0.02s; }
+  tbody tr:nth-child(2) { animation-delay: 0.04s; }
+  tbody tr:nth-child(3) { animation-delay: 0.06s; }
+  tbody tr:nth-child(4) { animation-delay: 0.08s; }
+  tbody tr:nth-child(5) { animation-delay: 0.10s; }
+  tbody tr:nth-child(6) { animation-delay: 0.12s; }
+  tbody tr:nth-child(7) { animation-delay: 0.14s; }
+  tbody tr:nth-child(8) { animation-delay: 0.16s; }
+  tbody tr:nth-child(9) { animation-delay: 0.18s; }
+  tbody tr:nth-child(10) { animation-delay: 0.20s; }
+  tbody tr:nth-child(n+11) { animation-delay: 0.22s; }
+
+  .count-line {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding-left: 2px;
+  }
+  .count-line span { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="title">Gaviscon VSM — Opportunity &amp; Next Steps</div>
+    </div>
+    <div class="reckitt-brand">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 93 47.88" height="32" aria-label="Reckitt"><defs><style>.cls-1{fill:none;}.cls-2{clip-path:url(#clip-path);}.cls-3{fill:url(#linear-gradient);}.cls-4{clip-path:url(#clip-path-2);}.cls-5{fill:url(#linear-gradient-2);}</style><clipPath id="clip-path"><path class="cls-1" d="M50.36,47.52H54V33.13h-3.6ZM3.58,35.19h0V33.12H0v14.4H3.59V40.68c0-2,.2-2.69.77-3.38a2.59,2.59,0,0,1,2.1-.94,3.27,3.27,0,0,1,1.45.29l1.76-3.24a5.15,5.15,0,0,0-2.53-.63,3.62,3.62,0,0,0-3.56,2.41m12,.6c1.81,0,2.68,1.56,2.68,3.32h-5.7c.31-2.21,1.44-3.32,3-3.32m-6.65,4.6c0,4.77,2.74,7.48,7.51,7.48a11.78,11.78,0,0,0,5-1l-1.23-3a7.52,7.52,0,0,1-3.54.79c-2.35,0-3.66-1-4-2.93h9.1c.06-.66.08-1.29.08-2,0-3.63-1.49-6.92-5.95-6.92-4.72,0-6.9,3.73-6.9,7.61m14.15,0c0,4.76,2.91,7.48,7.29,7.48A9.72,9.72,0,0,0,34.68,47L33.46,43.9a5.53,5.53,0,0,1-2.93.74c-2.28,0-3.84-1.41-3.84-4.32,0-2.68,1.4-4.32,3.87-4.32a5.54,5.54,0,0,1,2.9.75l1.25-3.06a10,10,0,0,0-4.41-.91c-4.46,0-7.23,3.09-7.23,7.61m43.06-9.87v2.61H61.2V28l-3.58,2.5v2.62H55.4v3h2.22v7.06a4.09,4.09,0,0,0,4.66,4.66,7.58,7.58,0,0,0,3.2-.68l-1.21-3a3.09,3.09,0,0,1-1.54.43c-1.07,0-1.53-.58-1.53-1.61V36.16h4.93v7.06a4.09,4.09,0,0,0,4.66,4.66A7.56,7.56,0,0,0,74,47.2l-1.2-3a3.12,3.12,0,0,1-1.54.43c-1.07,0-1.53-.58-1.53-1.65V36.16H73.5v-3H69.71V28ZM49.91,29.26A2.25,2.25,0,1,0,52.16,27a2.25,2.25,0,0,0-2.25,2.25M36.2,28.88V47.52h3.62V40.79l4.57,6.73h4.53l-5.68-8L49,33.13H44.35L39.82,38.4V26.34Z"/></clipPath><linearGradient id="linear-gradient" x1="-138.71" y1="139.86" x2="-138.39" y2="139.86" gradientTransform="matrix(208.8, 0, 0, -208.8, 28964.05, 29240.45)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#c41974"/><stop offset="0.25" stop-color="#ff007f"/><stop offset="1" stop-color="#ff007f"/></linearGradient><clipPath id="clip-path-2"><path class="cls-1" d="M61.2,17.35a20.67,20.67,0,0,0,2.1,9.19l4.22-3a15.48,15.48,0,0,1-1.43-6.69c0-7.22,5.3-12.69,12.1-12.69,6.64,0,10.71,4.68,10.71,10.72,0,5.41-3.6,8.92-8.27,8.92-4.47,0-7.62-3.06-7.62-7.41,0-3.83,2.43-6.4,5.35-6.4,2.2,0,3.4,1,3.4,2.6,0,1.8-1.86,2.8-3.77,2.27l-2,1.42a27.5,27.5,0,0,0,5.78,5.44l2.14-1.49a37.47,37.47,0,0,1-3.44-2.95,4.71,4.71,0,0,0,4.25-4.7c0-3.23-2.3-5.52-6.31-5.52-4.77,0-8.77,3.93-8.77,9.52,0,6.21,4.54,10.8,11.07,10.8C87.9,27.42,93,22,93,14.8,93,6.25,87.07,0,78,0,68.74,0,61.2,7.21,61.2,17.35"/></clipPath><linearGradient id="linear-gradient-2" x1="-139.46" y1="139.98" x2="-139.14" y2="139.98" gradientTransform="matrix(103.63, 0, 0, -103.63, 14511.72, 14520.84)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff007f"/><stop offset="0.5" stop-color="#ff007f"/><stop offset="1" stop-color="#ff593d"/></linearGradient></defs><g class="cls-2"><rect class="cls-3" x="0.51" y="7.07" width="72.95" height="60.07" transform="translate(-14.6 27.93) rotate(-35)"/></g><g class="cls-4"><rect class="cls-5" x="56.21" y="-6.64" width="41.78" height="40.7" transform="translate(6.08 46.7) rotate(-35)"/></g></svg>
+      <div class="reckitt-divider"></div>
+      <div class="reckitt-sub">Hull Site<br>Gaviscon Bottles</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="filter-group">
+  <div class="filters">
+    <span class="filter-label">By horizon:</span>
+    <button class="filter-btn active all" onclick="filterHorizon('all', this)">All</button>
+    <button class="filter-btn now" onclick="filterHorizon('now', this)">Now</button>
+    <button class="filter-btn short" onclick="filterHorizon('short', this)">Short</button>
+    <button class="filter-btn medium" onclick="filterHorizon('medium', this)">Medium</button>
+    <button class="filter-btn strategic" onclick="filterHorizon('strategic', this)">Strategic</button>
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input class="search-input" type="text" placeholder="Search opportunities..." oninput="search(this.value)" id="searchInput">
+    </div>
+  </div>
+</div>
+
+<div class="filter-group">
+  <div class="filters">
+    <span class="filter-label">By process area:</span>
+    <button class="filter-btn active all" onclick="filterArea('all', this)">All areas</button>
+    <button class="filter-btn area-inbound"   onclick="filterArea('inbound-quality', this)">Inbound Quality</button>
+    <button class="filter-btn area-dispensary" onclick="filterArea('dispensary', this)">Dispensary</button>
+    <button class="filter-btn area-processing" onclick="filterArea('processing', this)">Processing</button>
+    <button class="filter-btn area-fillpack"   onclick="filterArea('fill-pack', this)">Packing</button>
+    <button class="filter-btn area-qcrelease"  onclick="filterArea('qc-release', this)">QC &amp; Release</button>
+    <button class="filter-btn area-dispatch"   onclick="filterArea('dispatch', this)">Dispatch</button>
+  </div>
+</div>
+
+<div class="count-line" id="countLine">Showing <span id="countNum">19</span> of 19 opportunities</div>
+
+<div class="table-wrap">
+  <table id="mainTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Horizon</th>
+        <th>Stream</th>
+        <th>Opportunity</th>
+        <th>What to Do</th>
+        <th>Benefit</th>
+        <th>Effort</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  <div class="empty-state" id="emptyState">No opportunities match your filters.</div>
+</div>
+
+<script>
+const AREA_META = {
+  'inbound-quality': { label: 'Inbound Quality', color: '#14b8a6' },
+  'dispensary':      { label: 'Dispensary',       color: '#fb923c' },
+  'processing':      { label: 'Processing',        color: '#818cf8' },
+  'fill-pack':       { label: 'Packing',            color: '#e879f9' },
+  'qc-release':      { label: 'QC & Release',      color: '#f87171' },
+  'dispatch':        { label: 'Dispatch',           color: '#94a3b8' },
+};
+
+const data = [
+  {
+    id: 1, horizon: "now", horizonLabel: "Now · 0–4 wks",
+    area: "qc-release",
+    stream: "QC / RFS",
+    opportunity: "QC→RFS daily handoff timing",
+    what: "Start QC reviews on change-shock to align with RFS batch review cycle. AM results logged by 7am, same day rather than afternoon shifts.",
+    benefit: "All day saved on all backloads/week. Virtually zero capex.",
+    effort: "Low"
+  },
+  {
+    id: 2, horizon: "now", horizonLabel: "Now · 0–4 wks",
+    area: "qc-release",
+    stream: "QC / RFS",
+    opportunity: "Add afternoon sample-pull shift (steward)",
+    what: "Recruit or redeploy one steward to afternoon shift so samples taken in the afternoon can enter the QC campaign next morning rather than losing a full day.",
+    benefit: "21-hour wait reduction per batch; increases throughput from 8 to 11 batches/day.",
+    effort: "Low"
+  },
+  {
+    id: 3, horizon: "now", horizonLabel: "Now · 0–4 wks",
+    area: "inbound-quality",
+    stream: "Alginate Inbound",
+    opportunity: "Consolidate delivery to 1 lot per truck",
+    what: "Work back with suppliers to use single lot number per truck delivery instead of 3 separate batches. Reduces paperwork from 25 lots to ~4 per receipt.",
+    benefit: "~60% reduction in goods-in admin time. Frees QC team time. FIFO quick win.",
+    effort: "Low"
+  },
+  {
+    id: 4, horizon: "now", horizonLabel: "Now · 0–4 wks",
+    area: "inbound-quality",
+    stream: "Alginate Inbound",
+    opportunity: "Second stirrer in RM QC lab",
+    what: "Purchase one additional stirrer so batches can be run simultaneously (30-min stir step). Currently sequenced, causing 20-min waits between each batch.",
+    benefit: "Removes chemical testing bottleneck. Low-cost capital item.",
+    effort: "Low"
+  },
+  {
+    id: 5, horizon: "now", horizonLabel: "Now · 0–4 wks",
+    area: "qc-release",
+    stream: "QC / RFS",
+    opportunity: "Deviation governance: 7-day closure target",
+    what: "Formalise FT meetings at RMU, introduce 7-day deviation closure KPI in April. All open deviations at 44-day avg are blocking 11% of batches.",
+    benefit: "Removes chemical backlog. No capex. Governance change only.",
+    effort: "Low"
+  },
+  {
+    id: 6, horizon: "short", horizonLabel: "Short · 1–3 mo",
+    area: "inbound-quality",
+    stream: "Alginate Inbound",
+    opportunity: "Digitise pH release admin",
+    what: "Implement digital system for pH test logging and CoFA sign-off. Currently ~35 days management time per year across monthly admin.",
+    benefit: "15 days/year of analyst time freed for value-added activity.",
+    effort: "Medium"
+  },
+  {
+    id: 7, horizon: "short", horizonLabel: "Short · 1–3 mo",
+    area: "dispensary",
+    stream: "Dispensary / Processing",
+    opportunity: "Convert dispensary to pull (MES work-order trigger)",
+    what: "Remove planning-based push work orders. Processing suites trigger dispensary pull via MES. Eliminate purchase requests from dispensary and monitor.",
+    benefit: "Eliminates 18-batch WIP on hold. Batch sequencing errors removed. Aligns with MES roadmap.",
+    effort: "Medium"
+  },
+  {
+    id: 8, horizon: "short", horizonLabel: "Short · 1–3 mo",
+    area: "processing",
+    stream: "Processing",
+    opportunity: "Bring CIP back to 70-min standard",
+    what: "Root-cause the gap (70-min standard vs 86-min average CIP). Likely: steam SIF not sequencing, sprinkler variability, schedule guess. Implement standard work.",
+    benefit: "14% total lead-time reduction. Each avoided extra 30-min CIP step avoids ~£1,480 formula loss.",
+    effort: "Medium"
+  },
+  {
+    id: 9, horizon: "short", horizonLabel: "Short · 1–3 mo",
+    area: "processing",
+    stream: "Processing",
+    opportunity: "Bring batch cycle time to 3.5h standard",
+    what: "Investigate gap (target 3.5h; current avg 7.66h). Likely: first-batch warm-up, manual addition sequencing, CIP back-to-back. Implement standard work.",
+    benefit: "Combined with CIP decrease, significant reduction across total manufacturing time.",
+    effort: "Medium"
+  },
+  {
+    id: 10, horizon: "short", horizonLabel: "Short · 1–3 mo",
+    area: "fill-pack",
+    stream: "B6 Packing Line",
+    opportunity: "Automate depalletiser buffer signal",
+    what: "Give the MR operator a simple visual/audible alert when the bottle buffer approaches 150 kg, removing the need for manual monitoring and reacting to machine stops.",
+    benefit: "Reduces micro-stoppages and operator attention load. Directional gain on throughput.",
+    effort: "Medium"
+  },
+  {
+    id: 11, horizon: "short", horizonLabel: "Short · 1–3 mo",
+    area: "fill-pack",
+    stream: "B6 Packing Line",
+    opportunity: "Review and challenge 240-bottle IPC check",
+    what: "The 240-bottle check was standardised 1 year ago after a quality issue. Assess whether the trigger condition still applies. If not, reduce frequency or automate.",
+    benefit: "Half-hour of technician time reclaimed per event. Reduces operator burden.",
+    effort: "Medium"
+  },
+  {
+    id: 12, horizon: "short", horizonLabel: "Short · 1–3 mo",
+    area: "qc-release",
+    stream: "QC / RFS",
+    opportunity: "Extend campaign logic — increase to 11 batches/day",
+    what: "Extend campaign sample timing with new sampling and scheduling approach. Requires minimal capex.",
+    benefit: "6 → 11 batches/day QC throughput. Reduces downstream release backlog.",
+    effort: "Medium"
+  },
+  {
+    id: 13, horizon: "medium", horizonLabel: "Medium · 3–6 mo",
+    area: "processing",
+    stream: "Processing",
+    opportunity: "Implement automatic powder feeders",
+    what: "Reduce manual big-bag addition with automatic proximity feeders to reduce manual additions, improve cycle time consistency, and reduce operator dependence.",
+    benefit: "Cycle time improvement + operator freed for higher-value activity. Reduces manual handling risk.",
+    effort: "High"
+  },
+  {
+    id: 14, horizon: "medium", horizonLabel: "Medium · 3–6 mo",
+    area: "fill-pack",
+    stream: "B6 Packing Line",
+    opportunity: "MES digital reporting on B6 line",
+    what: "Replace manual MES report and align with MES integration data capture. Current manual logs create high variance in data quality, making performance management difficult.",
+    benefit: "Accurate OEE data. Enables real-time performance visibility. Foundation for further automation.",
+    effort: "High"
+  },
+  {
+    id: 15, horizon: "strategic", horizonLabel: "Strategic · 6+ mo",
+    area: "inbound-quality",
+    stream: "Alginate Inbound",
+    opportunity: "Reduce policy stock to 2–3 months",
+    what: "Work with procurement and finance to reduce alginate buffer from 6–12 months to 2–3 months. Explore VSM benefits. Supplier stays at vendor until called off.",
+    benefit: "Up to £18m working capital release. Eliminates ~40% limited DPS site capex cost.",
+    effort: "High"
+  },
+  {
+    id: 16, horizon: "strategic", horizonLabel: "Strategic · 6+ mo",
+    area: "inbound-quality",
+    stream: "Alginate Inbound",
+    opportunity: "Multi-source / alternate supplier strategy",
+    what: "Qualify at least one alternate alginate supplier to reduce single-source risk, enable policy stock reduction above.",
+    benefit: "Enables stock reduction without supplier risk. Improves procurement leverage.",
+    effort: "High"
+  },
+  {
+    id: 17, horizon: "strategic", horizonLabel: "Strategic · 6+ mo",
+    area: "dispatch",
+    stream: "Dispatch",
+    opportunity: "Direct dispatch — end-of-line conveyor to truck",
+    what: "Eliminate shed-to-truck loading by routing pallets directly via end-of-line conveyor. Demand-driven scheduling, lower costs, automation.",
+    benefit: "Reduces shed logistics cost and double-handling. Enables demand-driven fulfilment.",
+    effort: "High"
+  },
+  {
+    id: 18, horizon: "strategic", horizonLabel: "Strategic · 6+ mo",
+    area: "dispensary",
+    stream: "Processing",
+    opportunity: "Alginate silo feed — eliminate big-bag handling",
+    what: "Source alginate in bulk IBC silos. Remove big-bags. Remove dispensary-above dosing. Storage benefit. Eliminate micro-stoppages at the depot.",
+    benefit: "Significant manual handling reduction. Assess full outsource option.",
+    effort: "High"
+  }
+];
+
+let currentHorizon = 'all';
+let currentArea    = 'all';
+let currentSearch  = '';
+
+function render() {
+  const tbody     = document.getElementById('tbody');
+  const emptyState = document.getElementById('emptyState');
+  const tableWrap  = document.querySelector('.table-wrap table');
+
+  const filtered = data.filter(row => {
+    const matchHorizon = currentHorizon === 'all' || row.horizon === currentHorizon;
+    const matchArea    = currentArea    === 'all' || row.area    === currentArea;
+    const q = currentSearch.toLowerCase();
+    const matchSearch  = !q ||
+      row.opportunity.toLowerCase().includes(q) ||
+      row.stream.toLowerCase().includes(q) ||
+      row.benefit.toLowerCase().includes(q) ||
+      row.what.toLowerCase().includes(q);
+    return matchHorizon && matchArea && matchSearch;
+  });
+
+  document.getElementById('countLine').innerHTML =
+    `Showing <span>${filtered.length}</span> of ${data.length} opportunities`;
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '';
+    emptyState.style.display = 'block';
+    tableWrap.style.display  = 'none';
+  } else {
+    emptyState.style.display = 'none';
+    tableWrap.style.display  = '';
+    tbody.innerHTML = filtered.map(row => {
+      const am = AREA_META[row.area] || {};
+      const dot = `<span class="area-dot" style="background:${am.color || '#6b7280'}"></span>`;
+      return `
+      <tr>
+        <td>${row.id}</td>
+        <td><span class="badge ${row.horizon}">${row.horizonLabel}</span></td>
+        <td><span class="stream-tag">${dot}${row.stream}</span></td>
+        <td><div class="opp-name">${row.opportunity}</div>
+            <div style="margin-top:3px;font-size:10px;color:${am.color || '#6b7280'};font-family:'DM Mono',monospace;">${am.label || ''}</div></td>
+        <td><div class="what-text">${row.what}</div></td>
+        <td><div class="benefit-text">${row.benefit}</div></td>
+        <td><span class="effort ${row.effort}">${row.effort}</span></td>
+      </tr>`;
+    }).join('');
+  }
+}
+
+function filterHorizon(horizon, btn) {
+  currentHorizon = horizon;
+  btn.closest('.filters').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function filterArea(area, btn) {
+  currentArea = area;
+  btn.closest('.filters').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function search(val) {
+  currentSearch = val;
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
